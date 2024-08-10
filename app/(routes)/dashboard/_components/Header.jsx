@@ -1,11 +1,12 @@
 import React from "react";
 import Logo from "./Logo";
-import { UserButton } from "@clerk/nextjs";
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 
 function Header() {
   return (
-    <div className="flex justify-between items-center p-3">
+    <div className="flex justify-between items-center p-3 shadow-sm">
       <Logo />
+      <OrganizationSwitcher />
       <UserButton />
     </div>
   );
