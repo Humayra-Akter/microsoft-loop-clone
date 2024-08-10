@@ -16,14 +16,7 @@ export default function Page() {
           <div class="max-w-xl lg:max-w-3xl">
            
 
-            <h1 class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl">
-              Welcome to Squid 🦑
-            </h1>
-
-            <p class="mt-4 leading-relaxed text-gray-500">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-              nam dolorum aliquam, quibusdam aperiam voluptatum.
-            </p>
+            
 
             <SignIn />
           </div>
