@@ -1,19 +1,23 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { SmilePlus } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
-function CreateWorspace() {
+function CreateWorkspace() {
   const [coverImage, setCoverImage] = useState("/cover.png");
+  const [workspaceName, setWorkspaceName] = useState();
 
   return (
-    <div className="p-10 md:px-36 lg:px-52 xl:px-80 py-20">
-      <div>
+    <div className="p-10 md:px-36 lg:px-64 xl:px-96 py-28">
+      <div className="shadow-2xl rounded-xl">
         {/* Cover img */}
-        <div className="relative group">
+        <div className="relative group cursor-pointer">
           <h2 className="hidden absolute p-4 w-full h-full items-center justify-center group-hover:flex">
             Change Cover
           </h2>
-          <div>
+          <div className="group-hover:opacity-40">
             <Image
               src={coverImage}
               width={400}
@@ -22,9 +26,30 @@ function CreateWorspace() {
             />
           </div>
         </div>
+        {/* input section  */}
+        <div className="p-12">
+          <h2 className="font-medium text-xl">Create a new workspace</h2>
+          <h2 className="text-sm mt-2">
+            This is a shared space where you can collaborate with your team. You
+            can always rename it later
+          </h2>
+          <div className="mt-8 flex gap-2 items-center">
+            <Button variant="outline">
+              <SmilePlus />
+            </Button>
+            <Input
+              placeholder="Workspace name"
+              onChange={(e) => setWorkspaceName(e.target.value)}
+            />
+          </div>
+          <div className="mt-7 justify-end flex gap-7">
+            <Button disabled={!workspaceName?.length}>Create</Button>
+            <Button variant="outline">Cancel</Button>
+          </div>
+        </div>
       </div>
     </div>
   );
 }
 
-export default CreateWorspace;
+export default CreateWorkspace;
