@@ -6,7 +6,7 @@ function Dashboard() {
   return (
     <div>
       <Header />
-      {/* <WorkspaceList /> */}
+      <WorkspaceList />
     </div>
   );
 }

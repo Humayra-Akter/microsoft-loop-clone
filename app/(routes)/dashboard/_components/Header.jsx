@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Logo from "./Logo";
+import Logo from "../../../_components/Logo";
 import { OrganizationSwitcher, useAuth, UserButton } from "@clerk/nextjs";
 
 function Header() {
