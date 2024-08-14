@@ -35,7 +35,6 @@ function CreateWorkspace() {
 
     setLoading(false);
     router.replace("/workspace/" + docId);
-    console.log("data Inserted");
   };
 
   return (
