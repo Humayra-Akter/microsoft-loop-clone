@@ -10,6 +10,7 @@ function EmojiPickerComponent({ children, setEmojiIcon }) {
       {openEmojiPicker && (
         <div className="absolute z-10">
           <EmojiPicker
+            emojiStyle="facebook"
             onEmojiClick={(e) => {
               setEmojiIcon(e.emoji);
               setOpenEmojiPicker(false);
