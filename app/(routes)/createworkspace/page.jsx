@@ -3,14 +3,40 @@ import CoverPicker from "@/app/_components/CoverPicker";
 import EmojiPickerComponent from "@/app/_components/EmojiPickerComponent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SmilePlus } from "lucide-react";
+import { db } from "@/config/firebaseConfig";
+import { useAuth, useUser } from "@clerk/nextjs";
+import { doc, setDoc } from "firebase/firestore";
+import { Loader2Icon, SmilePlus } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 function CreateWorkspace() {
   const [coverImage, setCoverImage] = useState("/cover.png");
   const [workspaceName, setWorkspaceName] = useState();
   const [emoji, setEmoji] = useState();
+  const { user } = useUser();
+  const { orgId } = useAuth();
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
+  const OnCreateWorkspace = async () => {
+    setLoading(true);
+    const docId = Date.now();
+    const result = await setDoc(doc(db, "Workspace", docId.toString()), {
+      workspaceName: workspaceName,
+      emoji: emoji,
+      coverImage: coverImage,
+      createdBy: user?.primaryEmailAddress?.emailAddress,
+      id: docId,
+      orgId: orgId ? orgId : user?.primaryEmailAddress?.emailAddress,
+    });
+
+    setLoading(false);
+    router.replace("/workspace/" + docId);
+    console.log("data Inserted");
+  };
 
   return (
     <div className="p-10 md:px-36 lg:px-64 xl:px-96 py-28">
@@ -24,6 +50,7 @@ function CreateWorkspace() {
             <div className="group-hover:opacity-40">
               <Image
                 src={coverImage}
+                alt="cover"
                 width={400}
                 height={400}
                 className="w-full h-[150px] object-cover rounded-t-xl"
@@ -48,7 +75,12 @@ function CreateWorkspace() {
             />
           </div>
           <div className="mt-7 justify-end flex gap-7">
-            <Button disabled={!workspaceName?.length}>Create</Button>
+            <Button
+              disabled={!workspaceName?.length || loading}
+              onClick={OnCreateWorkspace}
+            >
+              Create {loading && <Loader2Icon className="animate-spin ml-2" />}
+            </Button>
             <Button variant="outline">Cancel</Button>
           </div>
         </div>
