@@ -45,8 +45,7 @@ function CreateWorkspace() {
     });
 
     setLoading(false);
-    router.replace('/workspace/'+workspaceId+"/"+docId);
-
+    router.replace("/workspace/" + workspaceId + "/" + docId);
   };
 
   return (
