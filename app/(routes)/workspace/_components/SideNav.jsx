@@ -1,10 +1,29 @@
 "use client";
 import Logo from "@/app/_components/Logo";
 import { Button } from "@/components/ui/button";
+import { db } from "@/config/firebaseConfig";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { Bell } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 function SideNav({ params }) {
+  useEffect(() => {
+    params && GetDocumentList();
+  }, [params]);
+
+  const GetDocumentList = () => {
+    const q = query(
+      collection(db, "workspaceDocuments"),
+      where("workspaceId", "==", Number(params?.workspaceid))
+    );
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data());
+      });
+    });
+  };
+
   return (
     <div className="h-screen md:block md:w-72 fixed p-5 shadow-md bg-blue-50 hidden">
       <div className="flex justify-between items-center">
