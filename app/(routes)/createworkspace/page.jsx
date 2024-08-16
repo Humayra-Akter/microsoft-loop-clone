@@ -31,6 +31,7 @@ function CreateWorkspace() {
       coverImage: coverImage,
       createdBy: user?.primaryEmailAddress?.emailAddress,
       id: workspaceId,
+
       orgId: orgId ? orgId : user?.primaryEmailAddress?.emailAddress,
     });
 
@@ -41,6 +42,7 @@ function CreateWorkspace() {
       coverImage: null,
       emoji: null,
       id: docId,
+      documentName: "Untitled Document",
       documentOutput: [],
     });
 
