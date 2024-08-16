@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/config/firebaseConfig";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { Bell } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import DocumentList from "./DocumentList";
 
 function SideNav({ params }) {
+  const [documentList, setDocumentList] = useState([]);
+
   useEffect(() => {
     params && GetDocumentList();
   }, [params]);
@@ -20,6 +23,7 @@ function SideNav({ params }) {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       querySnapshot.forEach((doc) => {
         console.log(doc.data());
+        setDocumentList((documentList) => [...documentList, doc.data()]);
       });
     });
   };
@@ -35,6 +39,9 @@ function SideNav({ params }) {
         <h2 className="font-medium">Workspace Name </h2>
         <Button size="sm">+</Button>
       </div>
+
+      {/* Document List  */}
+      <DocumentList />
     </div>
   );
 }
