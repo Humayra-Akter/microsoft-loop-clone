@@ -1,13 +1,21 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
+import DocumentOptions from "./DocumentOptions";
 
 function DocumentList({ documentList, params }) {
+  const router = useRouter();
   return (
     <div>
       {documentList.map((doc, index) => (
         <div
           key={index}
-          className={`mt-3 p-2 px-3 hover:bg-gray-200 rounded-lg cursor-pointer ${doc?.id == params?.documentid && 'bg-white'}`}
+          onClick={() =>
+            router.push("/workspace/" + params?.workspaceid + "/" + doc?.id)
+          }
+          className={`mt-3 p-2 px-3 hover:bg-gray-200 rounded-lg cursor-pointer ${
+            doc?.id == params?.documentid && "bg-white"
+          }`}
         >
           <div className="flex gap-2 items-center">
             {!doc.emoji && (
@@ -22,6 +30,7 @@ function DocumentList({ documentList, params }) {
               {doc?.emoji} {doc?.documentName}
             </h2>
           </div>
+          <DocumentOptions />
         </div>
       ))}
     </div>
