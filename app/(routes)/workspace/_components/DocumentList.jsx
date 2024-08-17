@@ -10,8 +10,8 @@ function DocumentList({ documentList, params }) {
   const router = useRouter();
 
   const DeleteDocument = async (docId) => {
-    await deleteDoc(doc, (db, "workspaceDocuments", docId));
-    toast("Document deleted !!!")
+    await deleteDoc(doc(db, "workspaceDocuments", docId));
+    toast("Document deleted !!!");
   };
 
   return (
