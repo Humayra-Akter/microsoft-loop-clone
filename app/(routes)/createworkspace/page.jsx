@@ -31,7 +31,6 @@ function CreateWorkspace() {
       coverImage: coverImage,
       createdBy: user?.primaryEmailAddress?.emailAddress,
       id: workspaceId,
-
       orgId: orgId ? orgId : user?.primaryEmailAddress?.emailAddress,
     });
 
@@ -44,6 +43,11 @@ function CreateWorkspace() {
       id: docId,
       documentName: "Untitled Document",
       documentOutput: [],
+    });
+
+    await setDoc(doc(db, "documentOutput", docId.toString()), {
+      docId: docId,
+      output: [],
     });
 
     setLoading(false);

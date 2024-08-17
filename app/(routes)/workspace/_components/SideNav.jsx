@@ -23,6 +23,7 @@ function SideNav({ params }) {
   const router = useRouter();
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
+  const MAX_FILE = 5;
 
   useEffect(() => {
     params && GetDocumentList();
@@ -56,6 +57,11 @@ function SideNav({ params }) {
       documentOutput: [],
     });
 
+    await setDoc(doc(db, "documentOutput", docId.toString()), {
+      docId: docId,
+      output: [],
+    });
+
     setLoading(false);
     router.replace("/workspace/" + params?.workspaceid + "/" + docId);
   };
@@ -79,8 +85,14 @@ function SideNav({ params }) {
 
       {/* Progress bar  */}
       <div className="absolute bottom-10 w-[85%]">
-        <Progress value={30} />
-        <h2>5 out of 5 files used</h2>
+        <Progress value={(documentList?.length / MAX_FILE) * 100} />
+        <h2 className="text-sm font-light my-2">
+          <strong>{documentList?.length}</strong> out of <strong>5</strong>{" "}
+          files used
+        </h2>
+        <h2 className="text-sm font-light my-2">
+          Update your plan for unlimited access
+        </h2>
       </div>
     </div>
   );
