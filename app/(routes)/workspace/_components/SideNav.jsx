@@ -17,6 +17,7 @@ import uuid4 from "uuid4";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import { Progress } from "@/components/ui/progress";
+import { toast } from "sonner";
 
 function SideNav({ params }) {
   const [documentList, setDocumentList] = useState([]);
@@ -45,6 +46,18 @@ function SideNav({ params }) {
   };
 
   const CreateNewDocument = async () => {
+    if (documentList?.length >= MAX_FILE) {
+      toast("Upgrade to add new file", {
+        description:
+          "You have reached max file limit, please upgrade your plan for unlimited file creation.",
+        action: {
+          label: "Upgrade",
+          onClick: () => console.log("Undo"),
+        },
+      });
+
+      return;
+    }
     setLoading(true);
     const docId = uuid4();
     await setDoc(doc(db, "workspaceDocuments", docId.toString()), {
