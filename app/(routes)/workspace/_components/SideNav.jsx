@@ -16,6 +16,7 @@ import DocumentList from "./DocumentList";
 import uuid4 from "uuid4";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
+import { Progress } from "@/components/ui/progress";
 
 function SideNav({ params }) {
   const [documentList, setDocumentList] = useState([]);
@@ -75,6 +76,12 @@ function SideNav({ params }) {
 
       {/* Document List  */}
       <DocumentList documentList={documentList} params={params} />
+
+      {/* Progress bar  */}
+      <div className="absolute bottom-10 w-[85%]">
+        <Progress value={30} />
+        <h2>5 out of 5 files used</h2>
+      </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@ function DocumentList({ documentList, params }) {
           onClick={() =>
             router.push("/workspace/" + params?.workspaceid + "/" + doc?.id)
           }
-          className={`mt-3 p-2 px-3 hover:bg-gray-200 rounded-lg cursor-pointer ${
+          className={`mt-3 p-2 px-3 hover:bg-gray-200 rounded-lg cursor-pointer flex justify-between items-center ${
             doc?.id == params?.documentid && "bg-white"
           }`}
         >
