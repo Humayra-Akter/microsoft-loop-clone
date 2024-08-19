@@ -1,5 +1,6 @@
 import React from "react";
 import DocumentHeader from "./DocumentHeader";
+import DocumentInfo from "./DocumentInfo";
 
 function DocumentEditorSection() {
   return (
@@ -7,11 +8,8 @@ function DocumentEditorSection() {
       {/* header  */}
       <DocumentHeader />
 
-      {/* cover  */}
-
-      {/* emoji picker  */}
-
-      {/* file name  */}
+      {/* Document info  */}
+      <DocumentInfo />
 
       {/* rich text editor  */}
     </div>
