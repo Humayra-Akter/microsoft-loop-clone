@@ -2,14 +2,14 @@ import React from "react";
 import DocumentHeader from "./DocumentHeader";
 import DocumentInfo from "./DocumentInfo";
 
-function DocumentEditorSection() {
+function DocumentEditorSection({ params }) {
   return (
     <div>
       {/* header  */}
       <DocumentHeader />
 
       {/* Document info  */}
-      <DocumentInfo />
+      <DocumentInfo params={params} />
 
       {/* rich text editor  */}
     </div>

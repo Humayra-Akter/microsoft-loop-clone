@@ -1,12 +1,29 @@
+"use client";
 import CoverPicker from "@/app/_components/CoverPicker";
 import EmojiPickerComponent from "@/app/_components/EmojiPickerComponent";
+import { db } from "@/config/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 import { SmilePlus } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function DocumentInfo() {
+function DocumentInfo({ params }) {
   const [coverImage, setCoverImage] = useState("/cover.png");
   const [emoji, setEmoji] = useState();
+
+  useEffect(() => {
+    params && GetDocumentInfo();
+  }, [params]);
+
+  const GetDocumentInfo = async () => {
+    const docRef = doc(db, "workspaceDocuments", params?.documentid);
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log(docSnap.data);
+    }
+  };
 
   return (
     <div>
