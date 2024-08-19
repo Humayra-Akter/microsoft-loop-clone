@@ -2,14 +2,16 @@
 import CoverPicker from "@/app/_components/CoverPicker";
 import EmojiPickerComponent from "@/app/_components/EmojiPickerComponent";
 import { db } from "@/config/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { SmilePlus } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 function DocumentInfo({ params }) {
   const [coverImage, setCoverImage] = useState("/cover.png");
   const [emoji, setEmoji] = useState();
+  const [documentInfo, setDocumentInfo] = useState();
 
   useEffect(() => {
     params && GetDocumentInfo();
@@ -17,18 +19,32 @@ function DocumentInfo({ params }) {
 
   const GetDocumentInfo = async () => {
     const docRef = doc(db, "workspaceDocuments", params?.documentid);
-
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log(docSnap.data);
+      setDocumentInfo(docSnap.data());
+      setEmoji(docSnap.data()?.emoji);
+      docSnap.data()?.coverImage && setCoverImage(docSnap.data()?.coverImage);
     }
+  };
+
+  const updateDocumentInfo = async (key, value) => {
+    const docRef = doc(db, "workspaceDocuments", params?.documentid);
+    await updateDoc(docRef, {
+      [key]: value,
+    });
+    toast("Document Updated !!!");
   };
 
   return (
     <div>
       {/* cover  */}
-      <CoverPicker setNewCover={(v) => setCoverImage(v)}>
+      <CoverPicker
+        setNewCover={(v) => {
+          setCoverImage(v);
+          updateDocumentInfo("coverImage", v);
+        }}
+      >
         <div className="relative group cursor-pointer">
           <h2 className="hidden absolute p-4 w-full h-full items-center justify-center group-hover:flex">
             Change Cover
@@ -65,7 +81,7 @@ function DocumentInfo({ params }) {
           type="text"
           placeholder="Untitled Document"
           className="font-bold text-4xl outline-none"
-          defaultValue={"Untitled Document"}
+          defaultValue={documentInfo?.documentName}
         />
       </div>
     </div>
