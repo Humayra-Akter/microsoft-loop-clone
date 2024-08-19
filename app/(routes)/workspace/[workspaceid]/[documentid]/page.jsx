@@ -1,8 +1,9 @@
 "use client";
 import React from "react";
 import SideNav from "../../_components/SideNav";
+import DocumentEditorSection from "../../_components/DocumentEditorSection";
 
-function WorkspaceDocument({params}) {
+function WorkspaceDocument({ params }) {
   return (
     <div>
       {/* side nav  */}
@@ -11,7 +12,9 @@ function WorkspaceDocument({params}) {
       </div>
 
       {/* Document  */}
-      <div className="md:ml-72">DOCUMENT</div>
+      <div className="md:ml-72">
+        <DocumentEditorSection />
+      </div>
     </div>
   );
 }
