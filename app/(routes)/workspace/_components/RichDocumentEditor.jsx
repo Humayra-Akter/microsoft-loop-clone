@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import EditorJS from "@editorjs/editorjs";
+import Header from "@editorjs/header";
 
 function RichDocumentEditor() {
   const ref = useRef();
@@ -16,7 +17,6 @@ function RichDocumentEditor() {
         holder: "editorjs",
         tools: {
           header: Header,
-          list: List,
         },
       });
       ref.current = editor;
