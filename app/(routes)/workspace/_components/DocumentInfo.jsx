@@ -64,7 +64,11 @@ function DocumentInfo({ params }) {
       {/* emoji picker  */}
 
       <div className="absolute ml-10 mt-[-40px] cursor-pointer">
-        <EmojiPickerComponent setEmojiIcon={(v) => setEmoji(v)}>
+        <EmojiPickerComponent
+          setEmojiIcon={(v) => {
+            setEmoji(v), updateDocumentInfo("emoji", v);
+          }}
+        >
           <div className="bg-[#ffffb0 p-4 rounded-md">
             {emoji ? (
               <span className="text-5xl">{emoji}</span>
@@ -82,6 +86,9 @@ function DocumentInfo({ params }) {
           placeholder="Untitled Document"
           className="font-bold text-4xl outline-none"
           defaultValue={documentInfo?.documentName}
+          onBlur={(event) =>
+            updateDocumentInfo("documentName", event.target.value)
+          }
         />
       </div>
     </div>
