@@ -13,7 +13,7 @@ function DocumentEditorSection({ params }) {
       <DocumentInfo params={params} />
 
       {/* rich text editor  */}
-      <RichDocumentEditor/>
+      <RichDocumentEditor params={params} />
     </div>
   );
 }
