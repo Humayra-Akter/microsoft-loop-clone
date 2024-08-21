@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import Delimiter from "@editorjs/delimiter";
@@ -8,25 +8,50 @@ import Table from "@editorjs/table";
 import CodeTool from "@editorjs/code";
 import List from "@editorjs/list";
 import Checklist from "@editorjs/checklist";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "@/config/firebaseConfig";
+import { useUser } from "@clerk/nextjs";
 
 function RichDocumentEditor({ params }) {
-  const ref = useRef();
+  const ref = useRef(null); // Initialize ref with null
   let editor;
+  let isFetched = false;
+
+  const { user } = useUser();
+
+  const [documentOutput, setDocumentOutput] = useState([]);
 
   useEffect(() => {
-    InitEditor();
-  }, []);
+    if (user) {
+      InitEditor();
+    }
+  }, [user]);
 
   const SaveDocument = () => {
+    console.log("UPDATE");
     ref.current.save().then(async (outputData) => {
-      console.log(outputData);
       const docRef = doc(db, "documentOutput", params?.documentid);
+
       await updateDoc(docRef, {
         output: outputData,
+        editedBy: user?.primaryEmailAddress?.emailAddress,
       });
     });
+  };
+
+  const GetDocumentOutput = () => {
+    const unsubscribe = onSnapshot(
+      doc(db, "documentOutput", params?.documentid),
+      (doc) => {
+        if (
+          doc.data()?.editedBy != user?.primaryEmailAddress?.emailAddress ||
+          isFetched == false
+        ) {
+          doc.data().editedBy && editor?.render(doc.data()?.output);
+          isFetched = true;
+        }
+      }
+    );
   };
 
   const InitEditor = () => {
@@ -34,6 +59,9 @@ function RichDocumentEditor({ params }) {
       editor = new EditorJS({
         onChange: (ao, event) => {
           SaveDocument();
+        },
+        onReady: () => {
+          GetDocumentOutput();
         },
 
         holder: "editorjs",
@@ -82,6 +110,7 @@ function RichDocumentEditor({ params }) {
       ref.current = editor;
     }
   };
+
   return (
     <div className="-ml-60">
       <div id="editorjs"></div>

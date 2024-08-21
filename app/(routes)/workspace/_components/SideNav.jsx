@@ -35,11 +35,10 @@ function SideNav({ params }) {
       collection(db, "workspaceDocuments"),
       where("workspaceId", "==", Number(params?.workspaceid))
     );
-    setDocumentList([]);
-
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      setDocumentList([]);
+
       querySnapshot.forEach((doc) => {
-        console.log(doc.data());
         setDocumentList((documentList) => [...documentList, doc.data()]);
       });
     });
@@ -49,15 +48,15 @@ function SideNav({ params }) {
     if (documentList?.length >= MAX_FILE) {
       toast("Upgrade to add new file", {
         description:
-          "You have reached max file limit, please upgrade your plan for unlimited file creation.",
+          "You reach max file, Please upgrad for unlimited file creation",
         action: {
           label: "Upgrade",
           onClick: () => console.log("Undo"),
         },
       });
-
       return;
     }
+
     setLoading(true);
     const docId = uuid4();
     await setDoc(doc(db, "workspaceDocuments", docId.toString()), {
