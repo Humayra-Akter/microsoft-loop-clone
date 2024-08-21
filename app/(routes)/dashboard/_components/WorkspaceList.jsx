@@ -1,15 +1,38 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { useUser } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
 import { AlignLeft, LayoutGrid } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import WorkspaceItemList from "./WorkspaceItemList";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "@/config/firebaseConfig";
 
 function WorkspaceList() {
   const { user } = useUser();
-
+  const { orgId } = useAuth();
   const [workspaceList, setWorkspaceList] = useState([]);
+
+  useEffect(() => {
+    user && getWorkspaceList();
+  }, [orgId, user]);
+
+  const getWorkspaceList = async () => {
+    const q = query(
+      collection(db, "Workspace"),
+      where(
+        "orgId",
+        "==",
+        orgId ? orgId : user?.primaryEmailAddress?.emailAddress
+      )
+    );
+    const querySnapShot = await getDocs(q);
+
+    querySnapShot.forEach((doc) => {
+      setWorkspaceList((prev) => [...prev, doc.data()]);
+    });
+  };
 
   return (
     <div className="my-10 p-10 md:px-24 lg:px-36 xl:px-52">
@@ -38,13 +61,13 @@ function WorkspaceList() {
           />
           <h2>Create a new Workspace</h2>
           <Link href={"/createworkspace"}>
-            <Button className="my-3">
-              + New Workspace
-            </Button>
+            <Button className="my-3">+ New Workspace</Button>
           </Link>
         </div>
       ) : (
-        <div></div>
+        <div>
+          <WorkspaceItemList workspaceList={workspaceList} />
+        </div>
       )}
     </div>
   );
