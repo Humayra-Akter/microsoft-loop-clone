@@ -1,13 +1,22 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 function WorkspaceItemList({ workspaceList }) {
+  const router = useRouter();
+  const OnClickWorkspaceItem = (workspaceId) => {
+    router.push("/workspace/" + workspaceId);
+  };
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-6">
       {workspaceList &&
         workspaceList.map((workspace, index) => (
           <div
             key={index}
+            onClick={() => {
+              OnClickWorkspaceItem(workspace?.id);
+            }}
             className="border shadow-xl rounded-xl hover:scale-105 transition-all cursor-pointer"
           >
             <Image

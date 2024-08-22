@@ -19,6 +19,7 @@ function WorkspaceList() {
   }, [orgId, user]);
 
   const getWorkspaceList = async () => {
+    setWorkspaceList([]);
     const q = query(
       collection(db, "Workspace"),
       where(

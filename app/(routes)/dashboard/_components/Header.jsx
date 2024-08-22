@@ -1,11 +1,31 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Logo from "../../../_components/Logo";
-import { OrganizationSwitcher, useAuth, UserButton } from "@clerk/nextjs";
+import {
+  OrganizationSwitcher,
+  useAuth,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/config/firebaseConfig";
 
 function Header() {
   const { orgId } = useAuth();
-  console.log(orgId);
+  const { user } = useUser();
+
+  useEffect(() => {
+    user && saveUserData();
+  }, [user]);
+
+  const saveUserData = async () => {
+    const docId = user?.primaryEmailAddress?.emailAddress;
+    await setDoc(doc(db, "LoopUsers", docId), {
+      name: user?.fullName,
+      email: user?.primaryEmailAddress?.emailAddress,
+      avatar: user?.imageUrl,
+    });
+  };
 
   return (
     <div className="flex justify-between items-center p-3 shadow-sm">
