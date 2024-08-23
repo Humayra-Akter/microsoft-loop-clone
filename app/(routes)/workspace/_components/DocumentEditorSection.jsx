@@ -18,17 +18,21 @@ function DocumentEditorSection({ params }) {
       <DocumentInfo params={params} />
 
       {/* rich text editor  */}
-      <RichDocumentEditor params={params} />
 
-      <div className="fixed right-5 bottom-5 z-50">
-        <Button onClick={() => setOpenComment(!openComment)}>
-          {openComment ? (
-            <X className="h-4 w-4" />
-          ) : (
-            <MessageCircle className="h-4 w-4" />
-          )}
-        </Button>
-        {openComment && <CommentBox />}
+      <div className="grid grid-cols-4">
+        <div className="col-span-3">
+          <RichDocumentEditor params={params} />
+        </div>
+        <div className="fixed right-5 bottom-5">
+          <Button onClick={() => setOpenComment(!openComment)}>
+            {openComment ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <MessageCircle className="h-4 w-4" />
+            )}
+          </Button>
+          {openComment && <CommentBox />}
+        </div>
       </div>
     </div>
   );
