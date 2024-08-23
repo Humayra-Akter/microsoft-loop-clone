@@ -9,7 +9,14 @@ import {
 
 export function Room({ children, params }) {
   return (
-    <LiveblocksProvider publicApiKey={process.env.NEXT_PUBLIC_LIVEBLOCK_PK}>
+    <LiveblocksProvider
+      authEndpoint="/api/liveblocks-auth"
+      resolveUsers={async ({ userIds }) => {
+        console.log(userIds);
+
+        return [];
+      }}
+    >
       <RoomProvider id={params?.documentid}>
         <ClientSideSuspense fallback={<div>Loading…</div>}>
           {children}
