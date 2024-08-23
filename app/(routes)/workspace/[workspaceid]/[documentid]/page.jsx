@@ -6,7 +6,7 @@ import { Room } from "@/app/Room";
 
 function WorkspaceDocument({ params }) {
   return (
-    <Room>
+    <Room params={params}>
       <div>
         {/* side nav  */}
         <div>

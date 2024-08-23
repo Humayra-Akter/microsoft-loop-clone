@@ -3,7 +3,7 @@ import DocumentHeader from "./DocumentHeader";
 import DocumentInfo from "./DocumentInfo";
 import RichDocumentEditor from "./RichDocumentEditor";
 import { Button } from "@/components/ui/button";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, X } from "lucide-react";
 import CommentBox from "./CommentBox";
 
 function DocumentEditorSection({ params }) {
@@ -22,7 +22,11 @@ function DocumentEditorSection({ params }) {
 
       <div className="fixed right-5 bottom-5 z-50">
         <Button onClick={() => setOpenComment(!openComment)}>
-          <MessageCircle className="h-4 w-4" />
+          {openComment ? (
+            <X className="h-4 w-4" />
+          ) : (
+            <MessageCircle className="h-4 w-4" />
+          )}
         </Button>
         {openComment && <CommentBox />}
       </div>
