@@ -19,7 +19,7 @@ const generationConfig = {
   responseMimeType: "application/json",
 };
 
-const chatSession = model.startChat({
+export const chatSession = model.startChat({
   generationConfig,
   history: [
     {
@@ -40,6 +40,3 @@ const chatSession = model.startChat({
     },
   ],
 });
-
-// const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
-// console.log(result.response.text());

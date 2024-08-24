@@ -116,7 +116,9 @@ function RichDocumentEditor({ params }) {
     <div className="-ml-60">
       <div id="editorjs"></div>
       <div className="fixed bottom-10 md:ml-80 left-0 z-10">
-        <GenerateAITemplate />
+        <GenerateAITemplate
+          setGenerateAIOutput={(output) => editor?.render(output)}
+        />
       </div>
     </div>
   );
