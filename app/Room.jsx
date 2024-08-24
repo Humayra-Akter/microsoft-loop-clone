@@ -12,7 +12,7 @@ import { db } from "@/config/firebaseConfig";
 export function Room({ children, params }) {
   return (
     <LiveblocksProvider
-      authEndpoint="/api/liveblocks-auth"
+      authEndpoint={"/api/liveblocks-auth?roomId="+params?.documentid}
       resolveUsers={async ({ userIds }) => {
         const q = query(
           collection(db, "LoopUsers"),
