@@ -7,13 +7,14 @@ const liveblocks = new Liveblocks({
 
 export async function POST(request) {
   const user = await currentUser();
-  const { room } = await request.json();
-  const { searchParams } = new URL(request?.url);
-  const roomId = searchParams.get("roomId");
 
   const session = liveblocks.prepareSession(
     user?.primaryEmailAddress?.emailAddress
   );
+
+  const { room } = await request.json();
+  const { searchParams } = new URL(request?.url);
+  const roomId = searchParams.get("roomId");
 
   session.allow(roomId, session?.FULL_ACCESS);
 

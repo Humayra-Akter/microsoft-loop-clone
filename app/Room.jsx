@@ -12,18 +12,18 @@ import { db } from "@/config/firebaseConfig";
 export function Room({ children, params }) {
   return (
     <LiveblocksProvider
-      authEndpoint={"/api/liveblocks-auth?roomId="+params?.documentid}
+      authEndpoint={"/api/liveblocks-auth?roomId=" + params?.documentid}
       resolveUsers={async ({ userIds }) => {
         const q = query(
           collection(db, "LoopUsers"),
           where("email", "in", userIds)
         );
+        const querySnapshot = await getDocs(q);
         const userList = [];
-        const querySnapShot = await getDocs(q);
-        querySnapShot.forEach((doc) => {
+        querySnapshot.forEach((doc) => {
+          console.log(doc.data());
           userList.push(doc.data());
         });
-
         return userList;
       }}
       resolveMentionSuggestions={async ({ text, roomId }) => {
@@ -31,19 +31,20 @@ export function Room({ children, params }) {
           collection(db, "LoopUsers"),
           where("email", "!=", null)
         );
+        const querySnapshot = await getDocs(q);
         let userList = [];
-        const querySnapShot = await getDocs(q);
-        querySnapShot.forEach((doc) => {
+        querySnapshot.forEach((doc) => {
           userList.push(doc.data());
         });
 
         if (text) {
-          userList = userList?.filter((user) => user.name.includes(text));
+          userList = userList.filter((user) => user.name.includes(text));
         }
-        return userList?.map((user) => user.id);
+
+        return userList.map((user) => user.email);
       }}
     >
-      <RoomProvider id={params?.documentid}>
+      <RoomProvider id={params?.documentid ? params?.documentid : "1"}>
         <ClientSideSuspense fallback={<div>Loading…</div>}>
           {children}
         </ClientSideSuspense>

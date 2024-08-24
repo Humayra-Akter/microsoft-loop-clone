@@ -11,6 +11,7 @@ import Checklist from "@editorjs/checklist";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "@/config/firebaseConfig";
 import { useUser } from "@clerk/nextjs";
+import GenerateAITemplate from "./GenerateAITemplate";
 
 function RichDocumentEditor({ params }) {
   const ref = useRef(null); // Initialize ref with null
@@ -114,6 +115,9 @@ function RichDocumentEditor({ params }) {
   return (
     <div className="-ml-60">
       <div id="editorjs"></div>
+      <div className="fixed bottom-10 md:ml-80 left-0 z-10">
+        <GenerateAITemplate />
+      </div>
     </div>
   );
 }

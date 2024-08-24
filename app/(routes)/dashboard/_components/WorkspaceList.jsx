@@ -17,9 +17,7 @@ function WorkspaceList() {
   useEffect(() => {
     user && getWorkspaceList();
   }, [orgId, user]);
-
   const getWorkspaceList = async () => {
-    setWorkspaceList([]);
     const q = query(
       collection(db, "Workspace"),
       where(
@@ -28,9 +26,10 @@ function WorkspaceList() {
         orgId ? orgId : user?.primaryEmailAddress?.emailAddress
       )
     );
-    const querySnapShot = await getDocs(q);
-
-    querySnapShot.forEach((doc) => {
+    const querySnapshot = await getDocs(q);
+    setWorkspaceList([]);
+    querySnapshot.forEach((doc) => {
+      console.log(doc.data());
       setWorkspaceList((prev) => [...prev, doc.data()]);
     });
   };

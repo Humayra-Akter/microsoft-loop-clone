@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect } from "react";
 import {
   Popover,
@@ -7,34 +6,33 @@ import {
 } from "@/components/ui/popover";
 import {
   useInboxNotifications,
+  useUnreadInboxNotificationsCount,
   useUpdateRoomNotificationSettings,
 } from "@liveblocks/react/suspense";
 import { InboxNotification, InboxNotificationList } from "@liveblocks/react-ui";
-import { useUnreadInboxNotificationsCount } from "@liveblocks/react";
 
-function NotificationBox({ children }) {
+function NotifiationBox({ children }) {
   const { inboxNotifications } = useInboxNotifications();
-  const updateRoomNotificationSetting = useUpdateRoomNotificationSettings();
+  const updateRoomNotificationSettings = useUpdateRoomNotificationSettings();
   const { count, error, isLoading } = useUnreadInboxNotificationsCount();
-
   useEffect(() => {
-    updateRoomNotificationSetting({ threads: "all" });
-  }, []);
+    updateRoomNotificationSettings({ threads: "all" });
+    console.log(count);
+  }, [count]);
 
   return (
     <Popover>
       <PopoverTrigger>
         <div className="flex gap-1">
-          {children}
-          <span className="p-1 rounded-full bg-primary text-white text-[3px]">
-            {" "}
+          {children}{" "}
+          <span className="p-1 px-2 -ml-3 rounded-full text-[7px] bg-primary text-white">
             {count}
           </span>
         </div>
       </PopoverTrigger>
-      <PopoverContent className={"w-[150px]"}>
+      <PopoverContent className={"w-[500px]"}>
         <InboxNotificationList>
-          {inboxNotifications?.map((inboxNotification) => (
+          {inboxNotifications.map((inboxNotification) => (
             <InboxNotification
               key={inboxNotification.id}
               inboxNotification={inboxNotification}
@@ -46,4 +44,4 @@ function NotificationBox({ children }) {
   );
 }
 
-export default NotificationBox;
+export default NotifiationBox;

@@ -21,6 +21,7 @@
     "@editorjs/paragraph": "^2.11.6",
     "@editorjs/table": "^2.3.0",
     "@editorjs/text-variant-tune": "^1.0.3",
+    "@google/generative-ai": "^0.17.1",
     "@liveblocks/client": "^2.5.2",
     "@liveblocks/node": "^2.5.2",
     "@liveblocks/react": "^2.5.2",
