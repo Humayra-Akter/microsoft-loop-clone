@@ -40,7 +40,7 @@ function WorkspaceList() {
         <h2 className="font-bold text-2xl capitalize">
           Hello, {user?.fullName}{" "}
         </h2>
-        <Link href={"/createworkspace"}>
+        <Link href={"/createWorkspace"}>
           <Button>+</Button>
         </Link>
       </div>
@@ -60,7 +60,7 @@ function WorkspaceList() {
             alt="workspace"
           />
           <h2>Create a new Workspace</h2>
-          <Link href={"/createworkspace"}>
+          <Link href={"/createWorkspace"}>
             <Button className="my-3">+ New Workspace</Button>
           </Link>
         </div>
