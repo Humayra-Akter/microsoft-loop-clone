@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics, isSupported } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FREBASE_API_KEY,
   authDomain: "loop-a6bdc.firebaseapp.com",
@@ -15,7 +15,14 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-if (typeof window !== "undefined" && isSupported()) {
-  // Analytics can only be initialized in the client environment
-  const analytics = getAnalytics(app);
+// Check if the code is running in a browser before initializing analytics
+if (typeof window !== "undefined") {
+  // Import getAnalytics conditionally
+  import("firebase/analytics").then(({ getAnalytics, isSupported }) => {
+    isSupported().then((supported) => {
+      if (supported) {
+        getAnalytics(app);
+      }
+    });
+  });
 }
