@@ -1,2 +1,2 @@
-![home](public/home.png)
-![workplace](public/workplace.png)
+![home](./public/home.png)
+![workplace](./public/workplace.png)
