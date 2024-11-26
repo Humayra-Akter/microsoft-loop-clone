@@ -80,12 +80,12 @@ function SideNav({ params }) {
   };
 
   return (
-    <div className="h-screen md:block md:w-72 fixed p-5 shadow-md bg-blue-50 hidden">
+    <div className="h-screen md:block md:w-72 fixed p-5 shadow-md bg-slate-900 hidden">
       <div className="flex justify-between items-center">
         <Logo />
 
         <NotificationBox>
-          <Bell className="h-5 w-5 text-gray-500" />
+          <Bell className="h-5 w-5 text-gray-100" />
         </NotificationBox>
       </div>
       <hr className="my-5" />

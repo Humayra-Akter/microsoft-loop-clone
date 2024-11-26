@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import {
   Dialog,
@@ -21,7 +21,7 @@ function CoverPicker({ children, setNewCover }) {
     <div>
       <Dialog>
         <DialogTrigger className="w-full">{children}</DialogTrigger>
-        <DialogContent>
+        <DialogContent className="bg-black text-white">
           <DialogHeader>
             <DialogTitle>Update Cover</DialogTitle>
             <DialogDescription>

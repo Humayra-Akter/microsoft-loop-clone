@@ -55,49 +55,61 @@ function CreateWorkspace() {
   };
 
   return (
-    <div className="p-10 md:px-36 lg:px-64 xl:px-96 py-28">
-      <div className="shadow-2xl rounded-xl">
-        {/* Cover img */}
+    <div className="p-10 md:px-36 lg:px-64 xl:px-96 py-28 bg-black text-white">
+      <div className="shadow-2xl rounded-xl overflow-hidden">
+        {/* Cover Image Section */}
         <CoverPicker setNewCover={(v) => setCoverImage(v)}>
           <div className="relative group cursor-pointer">
-            <h2 className="hidden absolute p-4 w-full h-full items-center justify-center group-hover:flex">
-              Change Cover
-            </h2>
             <div className="group-hover:opacity-40">
               <Image
                 src={coverImage}
                 alt="cover"
                 width={400}
                 height={400}
-                className="w-full h-[150px] object-cover rounded-t-xl"
+                className="w-full h-[200px] object-cover"
               />
             </div>
+            <h2 className="hidden absolute top-0 left-0 w-full h-full flex items-center justify-center text-xl font-semibold bg-black/60 group-hover:flex">
+              Change Cover
+            </h2>
           </div>
         </CoverPicker>
-        {/* input section  */}
-        <div className="p-12">
-          <h2 className="font-medium text-xl">Create a new workspace</h2>
-          <h2 className="text-sm mt-2">
-            This is a shared space where you can collaborate with your team. You
-            can always rename it later
-          </h2>
-          <div className="mt-8 flex gap-2 items-center">
+
+        {/* Input Section */}
+        <div className="p-8 bg-gradient-to-br from-pitch-800 to-mint-900 rounded-b-xl">
+          <h2 className="text-2xl font-bold mb-4">Create a new workspace</h2>
+          <p className="text-sm text-gray-300 mb-8">
+            A shared space for collaboration with your team. Rename it anytime!
+          </p>
+
+          {/* Emoji Picker and Workspace Name */}
+          <div className="flex gap-4 items-center">
             <EmojiPickerComponent setEmojiIcon={(v) => setEmoji(v)}>
-              <Button variant="outline">{emoji ? emoji : <SmilePlus />}</Button>
+              <Button variant="outline bg-slate-700">
+                {emoji ? emoji : <SmilePlus />}
+              </Button>
             </EmojiPickerComponent>
             <Input
               placeholder="Workspace name"
+              className="bg-slate-700 text-white"
               onChange={(e) => setWorkspaceName(e.target.value)}
             />
           </div>
-          <div className="mt-7 justify-end flex gap-7">
+
+          {/* Buttons */}
+          <div className="mt-8 flex justify-between">
             <Button
-              disabled={!workspaceName?.length || loading}
               onClick={OnCreateWorkspace}
+              disabled={!workspaceName?.length || loading}
+              className="relative px-8 py-3 bg-white text-black font-semibold rounded-md"
             >
-              Create {loading && <Loader2Icon className="animate-spin ml-2" />}
+              Create
+              {loading && <Loader2Icon className="animate-spin ml-2" />}
             </Button>
-            <Button variant="outline">Cancel</Button>
+
+            <Button variant="outline" className="text-gray-500 border-gray-600">
+              Cancel
+            </Button>
           </div>
         </div>
       </div>
