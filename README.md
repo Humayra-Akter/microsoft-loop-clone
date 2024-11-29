@@ -1,2 +1,5 @@
-![home](./public/home.png)
-![workplace](./public/workplace.png)
+![home](./public/microsoft-loop-clone1.png)
+![home](./public/microsoft-loop-clone2.png)
+![home](./public/microsoft-loop-clone3.png)
+![home](./public/microsoft-loop-clone4.png)
+![home](./public/microsoft-loop-clone5.png)

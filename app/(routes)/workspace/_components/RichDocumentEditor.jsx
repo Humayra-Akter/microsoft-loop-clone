@@ -31,14 +31,28 @@ function RichDocumentEditor({ params }) {
   const SaveDocument = () => {
     console.log("UPDATE");
     ref.current.save().then(async (outputData) => {
+      // Validate outputData to avoid nested arrays
+      const normalizedOutput = {
+        ...outputData,
+        blocks: outputData.blocks.map((block) => ({
+          ...block,
+          data: { ...block.data }, // Ensure nested arrays are avoided here
+        })),
+      };
+
       const docRef = doc(db, "documentOutput", params?.documentid);
 
-      await updateDoc(docRef, {
-        output: outputData,
-        editedBy: user?.primaryEmailAddress?.emailAddress,
-      });
+      try {
+        await updateDoc(docRef, {
+          output: normalizedOutput,
+          editedBy: user?.primaryEmailAddress?.emailAddress,
+        });
+      } catch (error) {
+        console.error("Error updating document:", error.message);
+      }
     });
   };
+
 
   const GetDocumentOutput = () => {
     const unsubscribe = onSnapshot(
@@ -113,8 +127,8 @@ function RichDocumentEditor({ params }) {
   };
 
   return (
-    <div className="-ml-60">
-      <div id="editorjs"></div>
+    <div className="ml-60 text-white">
+      <div className="text-white bg-black" id="editorjs"></div>
       <div className="fixed bottom-10 md:ml-80 left-0 z-10">
         <GenerateAITemplate
           setGenerateAIOutput={(output) => editor?.render(output)}

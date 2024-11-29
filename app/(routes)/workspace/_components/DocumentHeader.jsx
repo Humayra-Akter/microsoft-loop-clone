@@ -7,7 +7,7 @@ function DocumentHeader() {
     <div className="flex justify-between items-center p-3 px-7 shadow-md">
       <div></div>
       <OrganizationSwitcher />
-      <div className="flex gap-2">
+      <div className="flex gap-2 text-white">
         <Button>Share</Button>
         <UserButton />
       </div>

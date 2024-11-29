@@ -73,7 +73,7 @@ function DocumentInfo({ params }) {
             {emoji ? (
               <span className="text-5xl">{emoji}</span>
             ) : (
-              <SmilePlus className="h-10 w-10 text-gray-500" />
+              <SmilePlus className="h-10 w-10 text-gray-800" />
             )}
           </div>
         </EmojiPickerComponent>
@@ -84,7 +84,7 @@ function DocumentInfo({ params }) {
         <input
           type="text"
           placeholder="Untitled Document"
-          className="font-bold text-4xl outline-none"
+          className="font-bold text-4xl text-white bg-black"
           defaultValue={documentInfo?.documentName}
           onBlur={(event) =>
             updateDocumentInfo("documentName", event.target.value)
